@@ -1,15 +1,17 @@
 
-var piglatin = require('pig-latin');
+const piglatin = require('pig-latin');
+const joke = require('awesome-dev-jokes');
 
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    const eng = req.query.eng.toLowerCase();
+    const action = req.query.action;
 
-    const pigLatinFinal = piglatin(eng);
+    let textToTranslate = action === "randomJoke" ? joke.getRandomJoke() : action
+
+    const pigLatinFinal = piglatin(textToTranslate);
 
     context.res = {
-        // status: 200, /* Defaults to 200 */
         body: pigLatinFinal
     };
 }
